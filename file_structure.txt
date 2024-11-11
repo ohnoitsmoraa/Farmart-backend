@@ -1,0 +1,43 @@
+farmart_project/
+├── app.py                  # Main application file to start the Flask app
+├── config/
+│   ├── __init__.py         # Configuration package initializer (usually empty)
+│   └── database.py         # Database configuration and initialization with Flask-SQLAlchemy
+├── models/
+│   ├── __init__.py         # Imports models for easy access
+│   ├── farmer.py           # Farmer model (table for farmer data)
+│   ├── user.py             # User model (table for user data)
+│   ├── animal.py           # Animal model (table for animal data)
+│   ├── order.py            # Order model (table for orders)
+│   └── cart.py             # Cart model (table for cart items)
+├── routes/
+│   ├── __init__.py         # Imports for route blueprints
+│   ├── farmer_routes.py    # Routes for farmer-related endpoints
+│   ├── user_routes.py      # Routes for user-related endpoints
+│   ├── animal_routes.py    # Routes for animal-related endpoints
+│   ├── order_routes.py     # Routes for order-related endpoints
+│   └── cart_routes.py      # Routes for cart-related endpoints
+├── .gitignore              # Specifies files and folders Git should ignore
+├── requirements.txt        # Project dependencies (Flask, Flask-SQLAlchemy, psycopg2-binary, etc.)
+├── README.md               # Project overview, setup instructions, and usage
+├── file_structure.txt      # Description of the project file structure
+└── venv                    # Environment variables (e.g., database URI, secret keys)
+
+
+app.py: The main file that starts the Flask application. It sets up the app, configures settings, connects to the database, and registers routes for different parts of the application.
+
+config/: This folder contains configuration files. It includes settings for the database and initializes the database connection.
+
+models/: Stores all the database models. Each model represents a table in the database, like Farmer, User, and Animal, and defines the relationships and data structure.
+
+routes/: Holds files with route definitions for different parts of the app (like user routes and farmer routes). These routes control how the application responds to different URL requests.
+
+.gitignore: Lists files and directories that should not be tracked by Git. This helps keep the repository clean and protects sensitive information like environment variables.
+
+requirements.txt: Lists the Python dependencies required to run the project, like Flask and SQLAlchemy. You can install all dependencies with pip install -r requirements.txt.
+
+README.md: A markdown file providing an overview of the project, how to set it up, and how to use it. It’s a helpful guide for anyone new to the project.
+
+file_structure.txt: Documents the file structure of the project, explaining the purpose of each folder and file. It’s a quick reference for understanding the project layout.
+
+venv: A file for storing environment variables like database credentials and secret keys. These settings should not be shared publicly, so this file is ignored by Git.
