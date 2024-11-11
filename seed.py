@@ -24,4 +24,19 @@ f8 = Farmer(name='Grace Lee', email='grace@gmail.com', location='Washington', fa
 
 db_session.add_all([f1, f2, f3, f4, f5, f6, f7, f8])
 db_session.commit()
-    
+
+ # Create Animals
+a1 = Animal(name='Cow', breed='Jersey', price = 150000, status ='available' , farmer_id=1)
+a2 = Animal(name='Goat', breed='Angus', price = 16000, status ='available', farmer_id=2)
+a3 = Animal(name='Sheep', breed='Hereford', price = 13000, status ='available', farmer_id=3)
+a4 = Animal(name='Pig', breed='Landrace', price = 14000, status ='available', farmer_id=4)
+a5 = Animal(name='Chicken', breed='Leghorn', price = 1800, status ='available', farmer_id=5)
+a6 = Animal(name='Duck', breed='Pekin', price = 17000, status ='available', farmer_id=6)
+a7 = Animal(name='Donkey', breed='Mule', price = 19000, status ='available', farmer_id=7)
+a8 = Animal(name='Horse', breed='Shetland', price = 200000, status ='available', farmer_id=8)
+a9 = Animal(name='Cow', breed='Freshian', price = 170000, status ='available', farmer_id=1)
+a10 = Animal(name='Goat', breed='Angora', price = 18000, status ='available', farmer_id=2)
+a11 = Animal(name='Sheep', breed='Dorper', price = 15000, status ='available', farmer_id=3)
+
+db_session.add_all([a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11])
+db_session.commit()
