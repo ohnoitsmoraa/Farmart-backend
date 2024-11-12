@@ -56,4 +56,17 @@ db_session.add_all([u1, u2, u3, u4, u5, u6, u7, u8, u9])
 db_session.commit()
 
 # Create Orders
-# o1 = Order(user_id=1, animal_id=1, quantity=1, total_price=150000)
+o1 = Order(user_id=8, animal_id=1, quantity=2, total_price=300000)
+o2 = Order(user_id=7, animal_id=2, quantity=4, total_price=64000)
+o3 = Order(user_id=6, animal_id=3, quantity=5, total_price=65000)
+o4 = Order(user_id=5, animal_id=4, quantity=3, total_price=42000)
+o5 = Order(user_id=4, animal_id=5, quantity=5, total_price=9000)
+o6 = Order(user_id=3, animal_id=6, quantity=4, total_price=68000)
+o7 = Order(user_id=2, animal_id=7, quantity=2, total_price=38000)
+o8 = Order(user_id=1, animal_id=8, quantity=1, total_price=200000)
+
+db_session.add_all([o1, o2, o3, o4, o5, o6, o7, o8])
+db_session.commit()
+
+# Create Cart
+
