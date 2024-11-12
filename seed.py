@@ -40,3 +40,20 @@ a11 = Animal(name='Sheep', breed='Dorper', price = 15000, status ='available', f
 
 db_session.add_all([a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11])
 db_session.commit()
+
+# Create User
+u1 = User(name='Maureen', email='maureen@gmail.com', location='Texas', password ='Mr1234')
+u2 = User(name='Abiud', email='abiud@gmail.com', location='California', password ='John15934')
+u3 = User(name='Kevin', email='kevin@gmail.com', location='Florida', password ='Abiud1234')
+u4 = User(name='Nellie', email='nellie@gmail.com', location='New York', password ='Abiud1234')
+u5 = User(name='Mitchelle', email='mitchelle@gmail.com', location='Illinois', password ='Abiud1234')
+u6 = User(name='Tony', email='tony@gmail.com', location='Kenti', password ='Kent578')
+u7 = User(name='Kipkorir', email='kipkorir@gmail.com', location='Oregon', password ='Kipr986')
+u8 = User(name='Augo', email='augo@gmail.com', location='Washington', password ='Aug8234')
+u9 = User(name='Kimberly', email='kimberly@gmail.com', location='Texas', password ='Kim34')
+
+db_session.add_all([u1, u2, u3, u4, u5, u6, u7, u8, u9])
+db_session.commit()
+
+# Create Orders
+# o1 = Order(user_id=1, animal_id=1, quantity=1, total_price=150000)
