@@ -69,4 +69,16 @@ db_session.add_all([o1, o2, o3, o4, o5, o6, o7, o8])
 db_session.commit()
 
 # Create Cart
+c1 = Cart(user_id=1, animal_id=1, quantity=2, total_price=300000)
+c2 = Cart(user_id=2, animal_id=2, quantity=4, total_price=64000)
+c3 = Cart(user_id=3, animal_id=3, quantity=5, total_price=65000)
+c4 = Cart(user_id=4, animal_id=4, quantity=3, total_price=42000)
+c5 = Cart(user_id=5, animal_id=5, quantity=5, total_price=9000)
+c6 = Cart(user_id=6, animal_id=6, quantity=4, total_price=68000)
+c7 = Cart(user_id=7, animal_id=7, quantity=2, total_price=38000)
+c8 = Cart(user_id=8, animal_id=8, quantity=1, total_price=200000)
+
+db_session.add_all([c1, c2, c3, c4, c5, c6, c7, c8])
+db_session.commit()
+
 
