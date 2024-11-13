@@ -13,6 +13,8 @@ with app.app_context():
 
     db.session.commit()
 
+    print ("Seeding data ..............")
+
     # Create Farmers
     f1 = Farmer(name='John Doe', email='john@gmail.com', location='Texas', farm_name ='Green Pastures')
     f2 = Farmer(name='Jane Smith', email='jane@gmail.com', location='California', farm_name ='Sunshine Farms')
@@ -25,4 +27,6 @@ with app.app_context():
 
     db.session.add_all([f1, f2, f3, f4, f5, f6, f7, f8])
     db.session.commit()
+
+    print ("Seeding farmers data ........")
     
