@@ -33,7 +33,7 @@ def get_farmers():
     # GET request to retrieve all farmers
     if request.method == 'GET':
         farmers = Farmer.query.all()
-        response = [farmer.dict() for farmer in farmers]
+        response = [farmer.to_dict() for farmer in farmers]
         return make_response(jsonify(response), 200)
     
     # POST request to create a new farmer

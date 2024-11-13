@@ -11,5 +11,14 @@ class Farmer(db.Model):
 
     animals = db.relationship("Animal", back_populates="farmer")
 
+    def to_dict(self):
+        return{
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'farm_name': self.farm_name,
+            'location': self.location
+        }
+
     def __repr__(self):
         return f"<Farmer(id={self.id}, name='{self.name}', farm_name='{self.farm_name}')>"
