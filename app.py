@@ -94,6 +94,58 @@ def farmer(id):
 
         return make_response(jsonify(farmer.to_dict()), 200)
     
+# User routes
+@app.route('/users', methods=['GET', 'POST'])
+@jwt_required(optional=True) # Allows access without a token for GET requests
+def users():
+    if request.method == 'GET':
+        users = User.query.all()
+        response = [user.to_dict() for user in users] 
+        return make_response(jsonify(response), 200)
+
+    if request.method == 'POST':
+        data = request.get_json()
+        new_user = User(username=data['username'], email=data['email'])
+        db.session.add(new_user)
+        db.session.commit()
+        return make_response({"message": "Success"}, 201) 
+
+@app.route('/users/<int:id>', methods=['GET', 'PATCH', 'DELETE']) 
+# @jwt_required() 
+def get_user(id):
+    if request.method == 'GET':
+        user = User.query.get(id)
+
+        if not user:
+            return make_response({"error": "User not found"}, 404)
+        
+        return make_response(user.to_dict(), 200)
+    
+    if request.method == 'DELETE':
+        user = User.query.get(id)
+
+        if not user:
+            return make_response({"error": "User not found"}, 404)
+
+        db.session.delete(user)
+        db.session.commit()
+        return make_response({"message": "Success"}, 200)
+    
+    if request.method == 'PATCH':
+        user = User.query.get(id)
+        data = request.get_json()
+
+        if not user:
+            return make_response({"error": "User not found"}, 404)
+
+        if 'name' in data:
+            user.name = data['name']
+        if 'email' in data:
+            user.email = data['email']
+        
+    db.session.commit()
+    return make_response(user.to_dict(), 200)
+    
 
 if __name__=='__main__':
     app.run(port=5555, debug=True)
