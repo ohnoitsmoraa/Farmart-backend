@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-# from model import *
+from models import *
+from config.database import db
 
 app = Flask(__name__)
 
