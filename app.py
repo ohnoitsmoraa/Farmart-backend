@@ -24,6 +24,27 @@ api = Api(app)
 
 db.init_app(app)
 
+# Error handlers for JWT
+@jwt.unauthorized_loader
+def unauthorized_response(error):
+    return make_response({"error": "Missing authorization header"}, 401)
+
+@jwt.invalid_token_loader
+def invalid_token_response(error):
+    return make_response({"error": "Invalid token"}, 401)
+
+@jwt.expired_token_loader
+def expired_token_response(expired_token):
+    return make_response({"error": "Token has expired"}, 401)
+
+# @jwt.token_in_blocklist_loader
+# def token_in_blocklist(jwt_header, jwt_data):
+#     jti = jwt_data['jti']
+
+#     token = db.session.query(Token).filter(Token.jti == jti).scalar()
+
+#     return token is not None
+
 # Home route
 @app.route('/')
 def index():
