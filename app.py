@@ -27,7 +27,23 @@ db.init_app(app)
 # Home route
 @app.route('/')
 def index():
-    return 'Hello Dearest Farmer'
+    return '''
+        <html>
+            <head>
+                <style>
+                    h1 {
+                        font-weight: bold;
+                        text-align: center;
+                        color: #2c3e50;  /* You can customize the color */
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Hello Dearest Farmer</h1>
+            </body>
+        </html>
+    '''
+
 
 # Farmers route
 @app.route('/farmers', methods=['GET', 'POST'])
