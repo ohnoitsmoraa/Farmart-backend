@@ -14,5 +14,15 @@ class Animal(db.Model):
     cart_items = db.relationship("Cart", back_populates="animal")
     order_items = db.relationship("Order", back_populates="animal")
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "type": self.type,
+            "breed": self.breed,
+            "age": self.age,
+            "price": self.price,
+            "farmer_id": self.farmer_id,
+        }
+
     def __repr__(self):
         return f"<Animal(id={self.id}, type='{self.type}', breed='{self.breed}', price={self.price})>"

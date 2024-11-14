@@ -186,7 +186,7 @@ def animals():
         return make_response(jsonify(new_animal.to_dict()), 201)
     
 @app.route('/animals/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
-@jwt_required()
+# @jwt_required()
 def animal(id):
     if request.method == 'GET':
         animal = Animal.query.get(id)
@@ -236,7 +236,7 @@ def get_orders():
     return make_response(jsonify(response), 200)
 
 @app.route('/orders/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
-@jwt_required()
+# @jwt_required()
 def order(id):
     if request.method == 'GET':
         order = Order.query.get(id)

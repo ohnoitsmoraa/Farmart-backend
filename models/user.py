@@ -10,5 +10,12 @@ class User(db.Model):
     orders = db.relationship("Order", back_populates="user")
     cart_items = db.relationship("Cart", back_populates="user")
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+        }
+
     def __repr__(self):
         return f"<User(id={self.id}, name='{self.name}', email='{self.email}')>"
