@@ -148,6 +148,7 @@ def get_user(id):
     
 # Animals route
 @app.route('/animals', methods=['GET', 'POST'])
+@jwt_required(optional=True)
 def animals():
     if request.method == 'GET':
         animals = Animal.query.all()
@@ -166,6 +167,7 @@ def animals():
         return make_response(jsonify(new_animal.to_dict()), 201)
     
 @app.route('/animals/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
+@jwt_required()
 def animal(id):
     if request.method == 'GET':
         animal = Animal.query.get(id)
@@ -206,6 +208,68 @@ def animal(id):
         db.session.commit()
 
         return make_response(jsonify(animal.to_dict()), 200)
+    
+# Orders route
+@app.route('/orders', methods=['GET', 'POST'])
+def get_orders():
+    orders = Order.query.all()
+    response = [order.to_dict() for order in orders]
+    return make_response(jsonify(response), 200)
+
+@app.route('/orders/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
+@jwt_required()
+def order(id):
+    if request.method == 'GET':
+        order = Order.query.get(id)
+
+        if not order:
+            return make_response({"error": "Order not found"}, 404)
+
+        return make_response(jsonify(order.to_dict()), 200)
+
+    if request.method == 'DELETE':
+        order = Order.query.get(id)
+
+        if not order:
+            return make_response({"error": "Order not found"}, 404)
+
+        db.session.delete(order)
+        db.session.commit()
+        return make_response({"message": "Order deleted successfully"}, 200)
+
+    if request.method == 'PATCH':
+        order = Order.query.get(id)
+        data = request.get_json()
+
+        if not order:
+            return make_response({"error": "Order not found"}, 404)
+
+        if 'user_id' in data:
+            order.user_id = data['user_id']
+        if 'animal_id' in data:
+            order.animal_id = data['animal_id']
+        if 'total_price' in data:
+            order.total_price = data['total_price']
+        if 'status' in data:
+            order.status = data['status']
+
+        db.session.commit()
+
+        return make_response(jsonify(order.to_dict()), 200)
+    
+@app.route('/orders/<int:id>/checkout', methods=['POST'])
+@jwt_required()
+def checkout(id):
+    order = Order.query.get(id)
+
+    if not order:
+        return make_response({"error": "Order not found"}, 404)
+
+    order.status = 'Completed'
+    db.session.commit()
+
+    return make_response(jsonify(order.to_dict()), 200)
+
 
 if __name__=='__main__':
     app.run(port=5555, debug=True)
