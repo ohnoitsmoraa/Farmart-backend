@@ -146,6 +146,66 @@ def get_user(id):
     db.session.commit()
     return make_response(user.to_dict(), 200)
     
+# Animals route
+@app.route('/animals', methods=['GET', 'POST'])
+def animals():
+    if request.method == 'GET':
+        animals = Animal.query.all()
+        response = [animal.to_dict() for animal in animals]
+        return make_response(jsonify(response), 200)
+
+    if request.method == 'POST':
+        data = request.get_json()
+
+        if not data or not data.get('type') or not data.get('breed') or not data.get('age') or not data.get('price') or not data.get('farmer_id'):
+            return make_response(jsonify({'message': 'Missing required fields'}), 404)
+
+        new_animal = Animal(type=data['type'], breed=data['breed'], age=data['age'], price=data['price'], farmer_id=data['farmer_id'])
+        db.session.add(new_animal)
+        db.session.commit()
+        return make_response(jsonify(new_animal.to_dict()), 201)
+    
+@app.route('/animals/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
+def animal(id):
+    if request.method == 'GET':
+        animal = Animal.query.get(id)
+
+        if not animal:
+            return make_response({"error": "Animal not found"}, 404)
+
+        return make_response(jsonify(animal.to_dict()), 200)
+
+    if request.method == 'DELETE':
+        animal = Animal.query.get(id)
+
+        if not animal:
+            return make_response({"error": "Animal not found"}, 404)
+
+        db.session.delete(animal)
+        db.session.commit()
+        return make_response({"message": "Animal deleted successfully"}, 200)
+
+    if request.method == 'PATCH':
+        animal = Animal.query.get(id)
+        data = request.get_json()
+
+        if not animal:
+            return make_response({"error": "Animal not found"}, 404)
+
+        if 'type' in data:
+            animal.type = data['type']
+        if 'breed' in data:
+            animal.breed = data['breed']
+        if 'age' in data:
+            animal.age = data['age']
+        if 'price' in data:
+            animal.price = data['price']
+        if 'farmer_id' in data:
+            animal.farmer_id = data['farmer_id']
+
+        db.session.commit()
+
+        return make_response(jsonify(animal.to_dict()), 200)
 
 if __name__=='__main__':
     app.run(port=5555, debug=True)
