@@ -81,4 +81,23 @@ c8 = Cart(user_id=8, animal_id=8, quantity=1, total_price=200000)
 db_session.add_all([c1, c2, c3, c4, c5, c6, c7, c8])
 db_session.commit()
 
+# Create farmers
+f1 = Farmer(name="John Doe")
+f2 = Farmer(name="Jane Smith")
+
+db_session.add_all([f1, f2])
+db_session.commit()
+
+# Add Farmers to Animals
+a1.farmer.append(f1)
+a2.farmer.append(f2)
+a3.farmer.append(f1)
+
+# Add Animals to Farmers
+f1.animals.append(a1)
+f1.animals.append(a3)
+f2.animals.append(a2)
+
+db_session.commit()
+
 
