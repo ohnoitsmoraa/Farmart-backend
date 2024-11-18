@@ -95,3 +95,21 @@ with app.app_context():
     print("Seeding completed ❤️")
 
 
+  # Create farmers
+    f1 = Farmer(name="John Doe")
+    f2 = Farmer(name="Jane Smith")
+
+    db_session.add_all([f1, f2])
+d   b_session.commit()
+
+    # Add Farmers to Animals
+    a1.farmer.append(f1)
+    a2.farmer.append(f2)
+    a3.farmer.append(f1)
+
+    # Add Animals to Farmers
+    f1.animals.append(a1)
+    f1.animals.append(a3)
+    f2.animals.append(a2)
+
+    db_session.commit()
