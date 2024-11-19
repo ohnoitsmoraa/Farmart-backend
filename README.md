@@ -96,8 +96,9 @@ Fork the repo, Create a new branch in your terminal & Install the prerequisite. 
 
 Open the folder location on the terminal and use the following command to run the app:
 
-### VERCEL LINK(LIVE LINK)
-[live link to my webiste](https://r)
+### RENDER LINK(LIVE LINK)
+[live link to my webiste]
+    https://farmart-backend-2-okz3.onrender.com
 
 ### HOW TO RUN ALL CODES
 clone the repository run using live server
