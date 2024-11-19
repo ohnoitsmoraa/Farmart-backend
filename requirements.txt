@@ -41,6 +41,7 @@ ptyprocess==0.7.0
 pure_eval==0.2.3
 Pygments==2.18.0
 PyJWT==2.9.0
+python-dotenv==1.0.1
 pytz==2024.2
 six==1.16.0
 SQLAlchemy==2.0.35
