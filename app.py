@@ -5,15 +5,15 @@ from models import *
 from config.database import db
 from flask_jwt_extended import jwt_required, JWTManager, get_jwt, create_access_token
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from flask_restful import Api, Resource
 
-load_dotenv()
+# load_dotenv()
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///farmart.db'
 app.config ['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config ['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
+app.config ['JWT_SECRET_KEY'] = 'JWT_SECRET_KEY'
 app.config ['JWT_TOKEN_LOCATION'] = ['headers']
 
 jwt = JWTManager(app)
