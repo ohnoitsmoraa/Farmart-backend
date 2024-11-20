@@ -1,4 +1,5 @@
 from config.database import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class Farmer(db.Model):
     __tablename__ = "farmers"
@@ -19,6 +20,12 @@ class Farmer(db.Model):
             'farm_name': self.farm_name,
             'location': self.location
         }
+    
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
     def __repr__(self):
         return f"<Farmer(id={self.id}, name='{self.name}', farm_name='{self.farm_name}')>"
