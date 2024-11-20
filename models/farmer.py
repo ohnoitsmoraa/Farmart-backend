@@ -9,6 +9,7 @@ class Farmer(db.Model):
     email = db.Column(db.String, unique=True, nullable=False)
     farm_name = db.Column(db.String, nullable=False)
     location = db.Column(db.String, nullable=True)
+    password = db.Column(db.String(50))
 
     animals = db.relationship("Animal", back_populates="farmer")
 
