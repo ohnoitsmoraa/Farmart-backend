@@ -9,10 +9,11 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from flask_restful import Api, Resource
 
-load_dotenv()
 app = Flask(__name__)
+load_dotenv()
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URI')
 app.config ['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config ['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
 app.config ['JWT_TOKEN_LOCATION'] = ['headers']
