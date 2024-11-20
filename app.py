@@ -5,6 +5,7 @@ from models import *
 from config.database import db
 from flask_jwt_extended import jwt_required, JWTManager, get_jwt, create_access_token
 import os
+from flask_cors import CORS
 from dotenv import load_dotenv
 from flask_restful import Api, Resource
 
@@ -24,6 +25,8 @@ api = Api(app)
 
 db.init_app(app)
 
+# CORS
+CORS(app, resources={r"/*": {"origins": "*"}})
 # Error handlers for JWT
 @jwt.unauthorized_loader
 def unauthorized_response(error):
