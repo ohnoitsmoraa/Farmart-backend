@@ -13,8 +13,11 @@ load_dotenv()
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://farmart_d12s_user:yusLSskPiE4JAgTvQMr4uMNHa6p2L4Jm@dpg-csv58qbtq21c73ek8il0-a.oregon-postgres.render.com/farmart_d12s'
+
 
 app.config ['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config ['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
