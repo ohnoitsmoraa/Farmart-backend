@@ -9,3 +9,6 @@ class Token (db.Model):
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  
     user = db.relationship('User', backref=db.backref('tokens', lazy=True))
+
+    def __repr__(self):
+        return f"<Token(id={self.id}, jti='{self.jti}', user_id={self.user_id})>"

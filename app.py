@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, make_response
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from models import *
+from models import Token
 from config.database import db
 from flask_jwt_extended import jwt_required, JWTManager, get_jwt, create_access_token
 import os
@@ -27,12 +28,15 @@ jwt = JWTManager(app)
 
 migrate = Migrate(app, db)
 
+db = SQLAlchemy()
+
 api = Api(app)
 
 db.init_app(app)
 
 # CORS
 CORS(app)
+
 # Error handlers for JWT
 @jwt.unauthorized_loader
 def unauthorized_response(error):
@@ -46,13 +50,13 @@ def invalid_token_response(error):
 def expired_token_response(expired_token):
     return make_response({"error": "Token has expired"}, 401)
 
-# @jwt.token_in_blocklist_loader
-# def token_in_blocklist(jwt_header, jwt_data):
-#     jti = jwt_data['jti']
+@jwt.token_in_blocklist_loader
+def token_in_blocklist(jwt_header, jwt_data):
+    jti = jwt_data['jti']
 
-#     token = db.session.query(Token).filter(Token.jti == jti).scalar()
+    token = db.session.query(Token).filter(Token.jti == jti).scalar()
 
-#     return token is not None
+    return token is not None
 
 # Home route
 @app.route('/')
