@@ -28,8 +28,6 @@ jwt = JWTManager(app)
 
 migrate = Migrate(app, db)
 
-db = SQLAlchemy()
-
 api = Api(app)
 
 db.init_app(app)
