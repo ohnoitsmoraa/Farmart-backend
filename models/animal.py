@@ -1,7 +1,10 @@
 from config.database import db
+from sqlalchemy_serializer import SerializerMixin
 
-class Animal(db.Model):
+class Animal(db.Model, SerializerMixin):
     __tablename__ = "animals"
+
+    serialize_rules = ('-farmer', '-cart_items', '-order_items',)
 
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String, nullable=False)

@@ -1,9 +1,12 @@
 from config.database import db
 from sqlalchemy.orm import validates
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy_serializer import SerializerMixin
 
-class User(db.Model):
+class User(db.Model, SerializerMixin):
     __tablename__ = "users"
+
+    seerialize_rules = ('-password', '-orders', '-cart_items',)  
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
