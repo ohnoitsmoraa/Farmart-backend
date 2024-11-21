@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, make_response
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from models import *
-from models import Token
+# from models import Token
 from config.database import db
 from flask_jwt_extended import jwt_required, JWTManager, get_jwt, create_access_token
 import os
