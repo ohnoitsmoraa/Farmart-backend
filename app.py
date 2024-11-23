@@ -38,12 +38,12 @@ def expired_token_response(expired_token):
     return make_response({"error": "Token has expired"}, 401)
 
 # @jwt.token_in_blocklist_loader
-# def token_in_blocklist(jwt_header, jwt_data):
-#     jti = jwt_data['jti']
+def token_in_blocklist(jwt_header, jwt_data):
+    jti = jwt_data['jti']
 
-#     token = db.session.query(Token).filter(Token.jti == jti).scalar()
+    token = db.session.query(Token).filter(Token.jti == jti).scalar()
 
-#     return token is not None
+    return token is not None
 
 # Home route
 @app.route('/')
@@ -185,6 +185,9 @@ def get_user(id):
         
     db.session.commit()
     return make_response(user.to_dict(), 200)
+
+def get_user_by_name():
+    return User.query
     
 # Animals route
 @app.route('/animals', methods=['GET', 'POST'])
@@ -315,12 +318,12 @@ def checkout(id):
 class RegisterUser(Resource):
     def post(self):
         data = request.get_json()
-        user = User.get_user_by_username(username=data.get('username'))
+        user = User.get_user_by_name(name=data.get('name'))
 
         if user is not None:
-            return make_response({"error": "Username already exists"}, 400)
+            return make_response({"error": "Name already exists"}, 400)
         
-        new_user = User(username=data.get('username'), email=data.get('email'))
+        new_user = User(name=data.get('username'), email=data.get('email'))
         new_user.set_password(data.get('password'))
         db.session.add(new_user)
         db.session.commit()
@@ -332,7 +335,7 @@ api.add_resource(RegisterUser, '/register')
 class LoginUser(Resource):
     def post(self):
         data = request.get_json()
-        user = User.get_user_by_username(username=data.get('username'))
+        user = User.query.filter_by(name=data['name']).first()
 
         if user is None or not user.check_password(data.get('password')):
             return make_response({"error": "Invalid username or password"}, 401)
