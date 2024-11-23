@@ -6,7 +6,7 @@ from sqlalchemy_serializer import SerializerMixin
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
-    seerialize_rules = ('-password', '-orders', '-cart_items',)  
+    serialize_rules = ('-password', '-orders', '-cart_items',)  
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)

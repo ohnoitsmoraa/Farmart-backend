@@ -197,8 +197,6 @@ def get_user(id):
     db.session.commit()
     return make_response(user.to_dict(), 200)
 
-def get_user_by_name():
-    return User.query
     
 # Animals route
 @app.route('/animals', methods=['GET', 'POST'])
@@ -329,12 +327,11 @@ def checkout(id):
 class RegisterUser(Resource):
     def post(self):
         data = request.get_json()
-        user = User.get_user_by_name(name=data.get('name'))
 
         if user is not None:
             return make_response({"error": "Name already exists"}, 400)
         
-        new_user = User(name=data.get('username'), email=data.get('email'))
+        new_user = User(name=data.get('name'), email=data.get('email'))
         new_user.set_password(data.get('password'))
         db.session.add(new_user)
         db.session.commit()
@@ -354,23 +351,58 @@ class LoginUser(Resource):
         access_token = create_access_token(identity=user.id)
         return make_response({"access_token": access_token}, 200)
     
+        if not user or not check_password_hash(user.password, data['password']):
+            return jsonify({'message': 'Invalid username or password!'}), 401
+    
 api.add_resource(LoginUser, '/login')
 
 
-class LogoutUser(Resource):
-    @jwt_required()   # With this you cannot log out without accessing / logging in
-    def get(self):
-        jwt = get_jwt()
-        jti = jwt['jti']
+# class LogoutUser(Resource):
+#     @jwt_required()   # With this you cannot log out without accessing / logging in
+#     def get(self):
+#         jwt = get_jwt()
+#         jti = jwt['jti']
 
-        new_block_list = Token(jti=jti)
-        db.session.add(new_block_list)
+#         new_block_list = Token(jti=jti)
+#         db.session.add(new_block_list)
+#         db.session.commit()
+
+#         return make_response ({"message" : "User logged out successfully"}, 201)
+
+
+# api.add_resource(LogoutUser, '/logout')
+
+class RegisterFarmer(Resource):
+    def post(self):
+        data = request.get_json()
+
+        if farmer is not None:
+            return make_response({"error": "Name already exists"}, 400)
+        
+        new_farmer = Farmer(name=data.get('name'), email=data.get('email'), farm_name=data.get('farm_name'), location=data.get('location'))
+        new_farmer.set_password(data.get('password'))
+        db.session.add(new_farmer)
         db.session.commit()
 
-        return make_response ({"message" : "User logged out successfully"}, 201)
+        return make_response({"message": "Farmer created successfully"}, 201)
 
+api.add_resource(RegisterFarmer, '/register')
 
-api.add_resource(LogoutUser, '/logout')
+class LoginFarmer(Resource):
+    def post(self):
+        data = request.get_json()
+        farmer = Farmer.query.filter_by(name=data['name']).first()
+
+        if farmer is None or not Farmer.check_password(data.get('password')):
+            return make_response({"error": "Invalid name or password"}, 401)
+
+        access_token = create_access_token(identity=user.id)
+        return make_response({"access_token": access_token}, 200)
+    
+        if not farmer or not check_password_hash(farmer.password, data['password']):
+            return jsonify({'message': 'Invalid username or password!'}), 401
+    
+api.add_resource(LoginFarmer, '/login')
 
 class UserResource(Resource):
     # GET method to fetch one or all users
