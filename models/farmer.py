@@ -1,8 +1,11 @@
 from config.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy_serializer import SerializerMixin
 
-class Farmer(db.Model):
+class Farmer(db.Model, SerializerMixin):
     __tablename__ = "farmers"
+
+    serialize_rules = ('-animals',)
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)

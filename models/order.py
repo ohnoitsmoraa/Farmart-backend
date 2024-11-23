@@ -1,7 +1,10 @@
 from config.database import db
+from sqlalchemy_serializer import SerializerMixin
 
-class Order(db.Model):
+class Order(db.Model, SerializerMixin):
     __tablename__ = "orders"
+
+    serialize_rules = ('-user', '-animal',)
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)

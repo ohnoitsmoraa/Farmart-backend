@@ -2,16 +2,24 @@ from flask import Flask, jsonify, request, make_response
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from models import *
+# from models import Token
 from config.database import db
 from flask_jwt_extended import jwt_required, JWTManager, get_jwt, create_access_token
 import os
+from flask_cors import CORS
 from dotenv import load_dotenv
 from flask_restful import Api, Resource
 
 load_dotenv()
+
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://farmart_d12s_user:yusLSskPiE4JAgTvQMr4uMNHa6p2L4Jm@dpg-csv58qbtq21c73ek8il0-a.oregon-postgres.render.com/farmart_d12s'
+
+
 app.config ['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config ['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
 app.config ['JWT_TOKEN_LOCATION'] = ['headers']
@@ -23,6 +31,9 @@ migrate = Migrate(app, db)
 api = Api(app)
 
 db.init_app(app)
+
+# CORS
+CORS(app)
 
 # Error handlers for JWT
 @jwt.unauthorized_loader
@@ -37,7 +48,7 @@ def invalid_token_response(error):
 def expired_token_response(expired_token):
     return make_response({"error": "Token has expired"}, 401)
 
-# @jwt.token_in_blocklist_loader
+@jwt.token_in_blocklist_loader
 def token_in_blocklist(jwt_header, jwt_data):
     jti = jwt_data['jti']
 
