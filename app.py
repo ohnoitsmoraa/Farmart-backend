@@ -17,9 +17,9 @@ app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://farmart_d12s_user:yusLSskPiE4JAgTvQMr4uMNHa6p2L4Jm@dpg-csv58qbtq21c73ek8il0-a.oregon-postgres.render.com/farmart_d12s'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://farmart_d12s_user:yusLSskPiE4JAgTvQMr4uMNHa6p2L4Jm@dpg-csv58qbtq21c73ek8il0-a.oregon-postgres.render.com/farmart_d12s'
 
-
+app.config ['SQLALCHEMY_DATABASE_URI'] = "sqlite:///farmart.db"
 app.config ['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config ['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
 app.config ['JWT_TOKEN_LOCATION'] = ['headers']
@@ -328,8 +328,8 @@ class RegisterUser(Resource):
     def post(self):
         data = request.get_json()
 
-        if user is not None:
-            return make_response({"error": "Name already exists"}, 400)
+        # if user is not None:
+            # return make_response({"error": "Name already exists"}, 400)
         
         new_user = User(name=data.get('name'), email=data.get('email'))
         new_user.set_password(data.get('password'))
@@ -343,7 +343,7 @@ api.add_resource(RegisterUser, '/register')
 class LoginUser(Resource):
     def post(self):
         data = request.get_json()
-        user = User.query.filter_by(name=data['name']).first()
+        user = User.query.filter_by(email=data['email']).first()
 
         if user is None or not user.check_password(data.get('password')):
             return make_response({"error": "Invalid Name or password"}, 401)
