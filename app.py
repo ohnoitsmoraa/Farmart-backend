@@ -346,13 +346,10 @@ class LoginUser(Resource):
         user = User.query.filter_by(name=data['name']).first()
 
         if user is None or not user.check_password(data.get('password')):
-            return make_response({"error": "Invalid username or password"}, 401)
+            return make_response({"error": "Invalid Name or password"}, 401)
 
         access_token = create_access_token(identity=user.id)
         return make_response({"access_token": access_token}, 200)
-    
-        if not user or not check_password_hash(user.password, data['password']):
-            return jsonify({'message': 'Invalid username or password!'}), 401
     
 api.add_resource(LoginUser, '/login')
 
@@ -393,14 +390,11 @@ class LoginFarmer(Resource):
         data = request.get_json()
         farmer = Farmer.query.filter_by(name=data['name']).first()
 
-        if farmer is None or not Farmer.check_password(data.get('password')):
+        if farmer is None or not farmer.check_password(data.get('password')):
             return make_response({"error": "Invalid name or password"}, 401)
 
-        access_token = create_access_token(identity=user.id)
+        access_token = create_access_token(identity=farmer.id)
         return make_response({"access_token": access_token}, 200)
-    
-        if not farmer or not check_password_hash(farmer.password, data['password']):
-            return jsonify({'message': 'Invalid username or password!'}), 401
     
 api.add_resource(LoginFarmer, '/login')
 
