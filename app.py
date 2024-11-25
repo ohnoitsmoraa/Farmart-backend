@@ -21,7 +21,7 @@ app = Flask(__name__)
 
 app.config ['SQLALCHEMY_DATABASE_URI'] = "sqlite:///farmart.db"
 app.config ['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config ['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
+app.config ['JWT_SECRET_KEY'] = "36898a1afab996bd2fea4c95"
 app.config ['JWT_TOKEN_LOCATION'] = ['headers']
 
 jwt = JWTManager(app)
